@@ -235,3 +235,35 @@ features/amigos/
 └── grupos/
     └── grupos.component.ts
 ```
+
+---
+
+## Docker (Containerización)
+
+### Archivos
+```
+FrontEnd/crumbs/
+├── Dockerfile           ← Multi-stage: dev (Node + ng serve) y prod (Nginx)
+├── docker-compose.yml   ← Levanta la app con un solo comando
+├── nginx.conf           ← Config de Nginx para SPA routing en producción
+└── .dockerignore        ← Excluye node_modules, dist, .git del build
+```
+
+### Desarrollo
+```bash
+docker compose up          # Levanta con hot-reload en http://localhost:4200
+docker compose up --build  # Reconstruye si cambiaste package.json
+docker compose down        # Detiene el container
+```
+
+### Producción
+```bash
+docker build --target production -t crumbs-frontend .
+docker run -p 80:80 crumbs-frontend
+```
+
+### Requisitos para el equipo
+- Solo necesitan **Docker** instalado (Docker Desktop en Windows/Mac, docker + docker-compose en Linux)
+- No necesitan instalar Node, npm, ni Angular CLI
+- Los cambios en código se reflejan automáticamente (volumen montado + polling)
+- Si se agrega un paquete nuevo al `package.json`, reconstruir con `--build`

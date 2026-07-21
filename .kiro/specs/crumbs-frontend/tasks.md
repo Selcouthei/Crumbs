@@ -8,6 +8,10 @@
 - [x] **T04** Crear `src/app/app.routes.ts` con todas las rutas y lazy loading
 - [x] **T05** Crear `src/app/app.config.ts` con todos los providers (router, httpClient, animations)
 - [x] **T06** Crear `src/app/app.component.ts` como shell mobile-first
+- [x] **T06b** Crear `Dockerfile` multi-stage (desarrollo con hot-reload + producción con Nginx)
+- [x] **T06c** Crear `docker-compose.yml` para levantar con `docker compose up`
+- [x] **T06d** Crear `nginx.conf` para SPA routing en producción
+- [x] **T06e** Crear `.dockerignore` para optimizar build context
 
 ## Fase 2 — Core: Modelos
 
