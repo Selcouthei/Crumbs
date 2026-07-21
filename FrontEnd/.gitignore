@@ -1,0 +1,49 @@
+# ========================
+# Dependencias
+# ========================
+node_modules/
+.npm
+
+# ========================
+# Build outputs
+# ========================
+dist/
+dist-ssr/
+build/
+out/
+.angular/
+
+# ========================
+# Variables de entorno
+# ========================
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ========================
+# Caché y herramientas
+# ========================
+.vite/
+.cache/
+.parcel-cache/
+*.tsbuildinfo
+
+# ========================
+# Testing
+# ========================
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# ========================
+# Logs
+# ========================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*

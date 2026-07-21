@@ -1,0 +1,46 @@
+# ========================
+# Variables de entorno
+# ========================
+.env
+.env.local
+.env.*.local
+
+# ========================
+# Dependencias (Python / Node)
+# ========================
+node_modules/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+dist/
+build/
+venv/
+.venv/
+env/
+.env/
+
+# ========================
+# Base de datos local
+# ========================
+*.sqlite3
+*.db
+*.db-shm
+*.db-wal
+
+# ========================
+# Caché y herramientas
+# ========================
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+coverage/
+htmlcov/
+*.tsbuildinfo
+
+# ========================
+# Logs
+# ========================
+*.log
