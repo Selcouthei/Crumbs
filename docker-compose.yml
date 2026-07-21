@@ -12,13 +12,13 @@ services:
   # --- Frontend: Angular 21 ---
   frontend:
     build:
-      context: ./FrontEnd/crumbs
+      context: ./FrontEnd
       target: development
     ports:
       - "4200:4200"
     volumes:
       # Monta código local para hot-reload
-      - ./FrontEnd/crumbs:/app
+      - ./FrontEnd:/app
       # Evita sobreescribir node_modules del container
       - /app/node_modules
     environment:
