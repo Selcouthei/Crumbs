@@ -8,13 +8,14 @@ Aplicación web optimizada para móviles para dividir gastos grupales de forma f
 
 | Capa | Tecnología |
 |---|---|
-| Framework | Angular 19 (Standalone Components) |
+| Framework | Angular 21 (Standalone Components) |
 | Lenguaje | TypeScript 5.6+ |
-| Build / Dev Server | Vite 5 + @analogjs/vite-plugin-angular |
+| Build / Dev Server | Angular CLI 21 + esbuild |
 | UI | Angular Material 19 + Angular CDK |
-| Estilos utilitarios | Tailwind CSS 3 |
+| Estilos | SCSS |
 | Reactividad | RxJS 7 + Angular Signals |
 | HTTP | Angular HttpClient + Interceptors |
+| Testing | Vitest |
 
 ---
 
@@ -43,31 +44,28 @@ src/
 │   │
 │   ├── app.routes.ts              # Rutas principales con lazy loading
 │   ├── app.config.ts              # Configuración de providers (standalone)
-│   └── app.component.ts           # Shell raíz con router-outlet
+│   └── app.ts                     # Shell raíz con router-outlet
 │
-├── assets/
-│   ├── icons/                     # Íconos SVG y favicon
-│   └── images/                    # Imágenes estáticas
-│
-├── styles.scss                    # Estilos globales y tema de Angular Material
-├── index.html                     # HTML raíz
-└── main.ts                        # Bootstrap de la aplicación
+├── public/
+│   └── favicon.ico
+└── styles.scss                    # Estilos globales
 ```
 
 ---
 
-## ⚙️ Instalación y Configuración
+## ⚙️ Instalación
 
 ### Requisitos previos
 
 - Node.js >= 20.x
 - npm >= 10.x
+- Angular CLI >= 21.x — `npm install -g @angular/cli`
 
 ### 1. Clonar el repositorio
 
 ```bash
 git clone <url-del-repositorio>
-cd Crumbs
+cd Crumbs/FrontEnd
 ```
 
 ### 2. Instalar dependencias
@@ -80,29 +78,46 @@ npm install
 
 ## 🚀 Comandos de Desarrollo
 
-### Ejecutar servidor local (Vite)
+### Ejecutar servidor local
 
 ```bash
-npm run dev
+ng serve
 ```
 
-Abre automáticamente `http://localhost:4200`. El servidor recarga en caliente ante cualquier cambio.
+Abre `http://localhost:4200/` en el navegador. Recarga automáticamente ante cualquier cambio.
+
+### Generar componentes con Angular CLI
+
+```bash
+# Componente
+ng generate component features/dashboard/components/mi-componente
+
+# Servicio
+ng generate service core/services/mi-servicio
+
+# Guard
+ng generate guard core/guards/auth
+
+# Pipe
+ng generate pipe shared/pipes/currency-integer
+
+# Directiva
+ng generate directive shared/directives/number-only
+```
 
 ### Compilar para producción
 
 ```bash
-npm run build
+ng build
 ```
 
-Genera los archivos optimizados en la carpeta `dist/`.
+Genera los archivos optimizados en `dist/`. Usa esbuild por defecto para builds rápidos.
 
-### Previsualizar el build de producción
+### Ejecutar tests unitarios
 
 ```bash
-npm run preview
+ng test
 ```
-
-Sirve el contenido de `dist/` localmente para verificar el build antes de desplegarlo.
 
 ---
 
@@ -122,23 +137,22 @@ Sirve el contenido de `dist/` localmente para verificar el build antes de desple
 ## 📐 Decisiones de Arquitectura
 
 ### Standalone Components
-Toda la app usa la arquitectura standalone de Angular 19. No hay `NgModules`. Cada componente declara sus propias dependencias en el array `imports`.
+Toda la app usa la arquitectura standalone de Angular 21. No hay `NgModules`. Cada componente declara sus propias dependencias en el array `imports`.
 
 ### Lazy Loading
 Cada feature se carga de forma diferida usando `loadComponent` y `loadChildren` en el router, reduciendo el bundle inicial.
 
 ### Mobile-First
-El `AppComponent` actúa como shell con `max-width: 480px` centrado, simulando una experiencia de app móvil incluso en escritorio.
+El componente raíz actúa como shell con `max-width: 480px` centrado, simulando una experiencia de app móvil en escritorio.
 
 ### Path Aliases
-Para evitar imports relativos profundos, se configuraron aliases en `tsconfig.json` y `vite.config.ts`:
+Para evitar imports relativos profundos, se configuran aliases en `tsconfig.json`:
 
 | Alias | Ruta real |
 |---|---|
 | `@core/*` | `src/app/core/*` |
 | `@features/*` | `src/app/features/*` |
 | `@shared/*` | `src/app/shared/*` |
-| `@assets/*` | `src/assets/*` |
 
 ---
 
