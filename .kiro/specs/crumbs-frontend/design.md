@@ -2,7 +2,7 @@
 
 ## Arquitectura General
 
-La aplicación sigue una arquitectura **Feature-based** con **Standalone Components** de Angular 19. No existen NgModules. Cada feature es una unidad autónoma con sus propios componentes, rutas y servicios locales, mientras que los servicios globales viven en `core/`.
+La aplicación sigue una arquitectura **Feature-based** con **Standalone Components** de Angular 21. No existen NgModules. Cada feature es una unidad autónoma con sus propios componentes, rutas y servicios locales, mientras que los servicios globales viven en `core/`.
 
 ```
 Bootstrap (main.ts)
@@ -242,28 +242,40 @@ features/amigos/
 
 ### Archivos
 ```
-FrontEnd/crumbs/
-├── Dockerfile           ← Multi-stage: dev (Node + ng serve) y prod (Nginx)
-├── docker-compose.yml   ← Levanta la app con un solo comando
-├── nginx.conf           ← Config de Nginx para SPA routing en producción
-└── .dockerignore        ← Excluye node_modules, dist, .git del build
+Crumbs/
+├── docker-compose.yml           ← Orquestador global (frontend + backend futuro)
+└── FrontEnd/
+    ├── Dockerfile               ← Multi-stage: dev (Node + ng serve) y prod (Nginx)
+    ├── nginx.conf               ← Config de Nginx para SPA routing en producción
+    └── .dockerignore            ← Excluye node_modules, dist, .git del build
 ```
 
-### Desarrollo
+### Cómo levantar el proyecto
+
+**Con Docker (recomendado — solo necesitan Docker instalado):**
 ```bash
+cd Crumbs
 docker compose up          # Levanta con hot-reload en http://localhost:4200
 docker compose up --build  # Reconstruye si cambiaste package.json
 docker compose down        # Detiene el container
 ```
 
+**Sin Docker (necesitan Node 22+ y npm 11+):**
+```bash
+cd Crumbs/FrontEnd
+npm install
+npm start                  # http://localhost:4200
+```
+
 ### Producción
 ```bash
-docker build --target production -t crumbs-frontend .
-docker run -p 80:80 crumbs-frontend
+cd Crumbs
+docker compose --profile prod up --build
+# Sirve en http://localhost:80
 ```
 
 ### Requisitos para el equipo
-- Solo necesitan **Docker** instalado (Docker Desktop en Windows/Mac, docker + docker-compose en Linux)
-- No necesitan instalar Node, npm, ni Angular CLI
+- **Con Docker:** Solo necesitan Docker instalado (Docker Desktop en Windows/Mac, docker + docker-compose en Linux). No necesitan Node, npm, ni Angular CLI.
+- **Sin Docker:** Necesitan Node 22+ y npm 11+.
 - Los cambios en código se reflejan automáticamente (volumen montado + polling)
 - Si se agrega un paquete nuevo al `package.json`, reconstruir con `--build`
