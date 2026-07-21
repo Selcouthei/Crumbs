@@ -119,6 +119,14 @@ Todos los servicios usan `HttpClient` y retornan `Observable<T>`. El estado glob
 - Adjunta el header `Authorization: Bearer <token>` a todas las requests.
 - Si recibe un `401`, limpia el token y redirige al login.
 
+### MockAuthInterceptor (`core/interceptors/mock-auth.interceptor.ts`)
+- Función interceptor (`HttpInterceptorFn`) para desarrollo.
+- Simula respuestas de `POST /api/auth/login` y `POST /api/auth/register`.
+- Delay de 500ms para simular latencia de red.
+- Usuario de prueba: `demo@crumbs.app` / `demo` / `123456`.
+- Se activa solo cuando `environment.useMocks = true`.
+- **Para conectar al backend real:** cambiar `useMocks` a `false` en environments.
+
 ---
 
 ## Componentes Shared
@@ -158,9 +166,36 @@ Todos los servicios usan `HttpClient` y retornan `Observable<T>`. El estado glob
 features/auth/
 ├── auth.routes.ts
 ├── login/
-│   └── login.component.ts
+│   ├── login.component.ts
+│   ├── login.component.html
+│   └── login.component.scss
 └── register/
-    └── register.component.ts
+    ├── register.component.ts
+    ├── register.component.html
+    └── register.component.scss
+```
+
+### Core (Implementado)
+```
+core/
+├── models/
+│   └── user.model.ts
+├── interfaces/
+│   └── auth.interfaces.ts          ← Contratos API documentados (DTOs)
+├── services/
+│   └── auth.service.ts
+├── guards/
+│   └── auth.guard.ts
+└── interceptors/
+    ├── auth.interceptor.ts          ← Producción: adjunta Bearer token
+    └── mock-auth.interceptor.ts     ← Desarrollo: simula backend
+```
+
+### Environments
+```
+src/environments/
+├── environment.ts                   ← Producción (useMocks: false)
+└── environment.development.ts       ← Desarrollo (useMocks: true)
 ```
 
 ### Dashboard

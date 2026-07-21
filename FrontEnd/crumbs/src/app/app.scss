@@ -1,0 +1,19 @@
+// ============================================================
+// AppComponent Shell — Mobile-first (max 480px)
+// ============================================================
+
+:host {
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  position: relative;
+}
+
+.app-shell {
+  width: 100%;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
