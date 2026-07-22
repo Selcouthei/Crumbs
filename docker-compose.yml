@@ -1,0 +1,57 @@
+# ============================================================
+# Crumbs — Docker Compose Global
+# ============================================================
+# Levanta todos los servicios del proyecto con un solo comando:
+#   docker compose up              → desarrollo (frontend + backend cuando esté listo)
+#   docker compose up frontend     → solo frontend
+#   docker compose up --build      → reconstruir todo
+#   docker compose down            → detener todo
+# ============================================================
+
+services:
+  # --- Frontend: Angular 21 ---
+  frontend:
+    build:
+      context: ./FrontEnd
+      target: development
+    ports:
+      - "4200:4200"
+    volumes:
+      # Monta código local para hot-reload
+      - ./FrontEnd:/app
+      # Evita sobreescribir node_modules del container
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+
+  # --- Backend: Python (Django/FastAPI) ---
+  # NOTA: Descomentar cuando el backend tenga Dockerfile
+  # backend:
+  #   build:
+  #     context: ./BackEnd
+  #     target: development
+  #   ports:
+  #     - "8000:8000"
+  #   volumes:
+  #     - ./BackEnd:/app
+  #   environment:
+  #     - ENV=development
+  #     - DATABASE_URL=postgresql://crumbs:crumbs@db:5432/crumbs
+  #   depends_on:
+  #     - db
+
+  # --- Base de datos: PostgreSQL ---
+  # NOTA: Descomentar cuando el backend lo necesite
+  # db:
+  #   image: postgres:16-alpine
+  #   ports:
+  #     - "5432:5432"
+  #   environment:
+  #     POSTGRES_DB: crumbs
+  #     POSTGRES_USER: crumbs
+  #     POSTGRES_PASSWORD: crumbs
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
+
+# volumes:
+#   pgdata:
