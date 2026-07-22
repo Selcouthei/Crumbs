@@ -1,0 +1,86 @@
+<div class="auth-container">
+  <div class="auth-header">
+    <h1 class="auth-title">Crumbs</h1>
+    <p class="auth-subtitle">Inicia sesión para continuar</p>
+  </div>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+    <!-- Error del servidor -->
+    @if (serverError()) {
+      <div class="server-error" role="alert">
+        <mat-icon aria-label="Error">error_outline</mat-icon>
+        <span>{{ serverError() }}</span>
+      </div>
+    }
+
+    <!-- Campo: Email o Nickname -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email o nickname</mat-label>
+      <input
+        matInput
+        formControlName="identifier"
+        placeholder="tu@email.com o tu_nickname"
+        autocomplete="username"
+        type="text"
+      />
+      <mat-icon matPrefix aria-label="Usuario">person_outline</mat-icon>
+      @if (loginForm.get('identifier')?.hasError('required') && loginForm.get('identifier')?.touched) {
+        <mat-error>Este campo es obligatorio</mat-error>
+      }
+      @if (loginForm.get('identifier')?.hasError('minlength') && loginForm.get('identifier')?.touched) {
+        <mat-error>Mínimo 3 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Campo: Contraseña -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Contraseña</mat-label>
+      <input
+        matInput
+        formControlName="password"
+        [type]="hidePassword() ? 'password' : 'text'"
+        placeholder="Tu contraseña"
+        autocomplete="current-password"
+      />
+      <mat-icon matPrefix aria-label="Contraseña">lock_outline</mat-icon>
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="togglePasswordVisibility()"
+        [attr.aria-label]="hidePassword() ? 'Mostrar contraseña' : 'Ocultar contraseña'"
+      >
+        <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+      @if (loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {
+        <mat-error>Este campo es obligatorio</mat-error>
+      }
+      @if (loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched) {
+        <mat-error>Mínimo 6 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Botón Submit -->
+    <button
+      mat-flat-button
+      color="primary"
+      type="submit"
+      class="submit-button"
+      [disabled]="isLoading()"
+    >
+      @if (isLoading()) {
+        <mat-spinner diameter="20" aria-label="Cargando"></mat-spinner>
+      } @else {
+        Iniciar sesión
+      }
+    </button>
+  </form>
+
+  <!-- Link a registro -->
+  <div class="auth-footer">
+    <p>
+      ¿No tienes cuenta?
+      <a routerLink="/auth/register" class="auth-link">Regístrate</a>
+    </p>
+  </div>
+</div>

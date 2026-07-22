@@ -2,16 +2,20 @@
 
 ## Fase 1 — Base y Configuración
 
-- [ ] **T01** Crear `index.html` con meta tags mobile-first y fuentes de Angular Material
-- [ ] **T02** Crear `src/main.ts` con `bootstrapApplication`
-- [ ] **T03** Crear `src/styles.scss` con tema personalizado de Angular Material
-- [ ] **T04** Crear `src/app/app.routes.ts` con todas las rutas y lazy loading
-- [ ] **T05** Crear `src/app/app.config.ts` con todos los providers (router, httpClient, animations)
-- [ ] **T06** Crear `src/app/app.component.ts` como shell mobile-first
+- [x] **T01** Crear `index.html` con meta tags mobile-first y fuentes de Angular Material
+- [x] **T02** Crear `src/main.ts` con `bootstrapApplication`
+- [x] **T03** Crear `src/styles.scss` con tema personalizado de Angular Material
+- [x] **T04** Crear `src/app/app.routes.ts` con todas las rutas y lazy loading
+- [x] **T05** Crear `src/app/app.config.ts` con todos los providers (router, httpClient, animations)
+- [x] **T06** Crear `src/app/app.component.ts` como shell mobile-first
+- [x] **T06b** Crear `FrontEnd/Dockerfile` multi-stage (desarrollo con hot-reload + producción con Nginx)
+- [x] **T06c** Crear `docker-compose.yml` en raíz del proyecto para levantar con `docker compose up`
+- [x] **T06d** Crear `FrontEnd/nginx.conf` para SPA routing en producción
+- [x] **T06e** Crear `FrontEnd/.dockerignore` para optimizar build context
 
 ## Fase 2 — Core: Modelos
 
-- [ ] **T07** Crear `core/models/user.model.ts`
+- [x] **T07** Crear `core/models/user.model.ts`
 - [ ] **T08** Crear `core/models/salida.model.ts`
 - [ ] **T09** Crear `core/models/gasto.model.ts`
 - [ ] **T10** Crear `core/models/integrante.model.ts`
@@ -19,12 +23,12 @@
 
 ## Fase 3 — Core: Seguridad
 
-- [ ] **T12** Crear `core/guards/auth.guard.ts` (`CanActivateFn`)
-- [ ] **T13** Crear `core/interceptors/auth.interceptor.ts` (`HttpInterceptorFn`) con manejo de 401
+- [x] **T12** Crear `core/guards/auth.guard.ts` (`CanActivateFn`)
+- [x] **T13** Crear `core/interceptors/auth.interceptor.ts` (`HttpInterceptorFn`) con manejo de 401
 
 ## Fase 4 — Core: Servicios
 
-- [ ] **T14** Crear `core/services/auth.service.ts` (login, register, token, currentUser$)
+- [x] **T14** Crear `core/services/auth.service.ts` (login, register, token, currentUser$)
 - [ ] **T15** Crear `core/services/salidas.service.ts` (CRUD + código de unión)
 - [ ] **T16** Crear `core/services/integrantes.service.ts` (registrados y fantasmas)
 - [ ] **T17** Crear `core/services/gastos.service.ts` (CRUD + lógica de división)
@@ -42,9 +46,9 @@
 
 ## Fase 6 — Feature: Auth
 
-- [ ] **T26** Crear `features/auth/auth.routes.ts`
-- [ ] **T27** Crear `features/auth/login/login.component.ts` (HU_CRUMBS_001)
-- [ ] **T28** Crear `features/auth/register/register.component.ts` (HU_CRUMBS_002)
+- [x] **T26** Crear `features/auth/auth.routes.ts`
+- [x] **T27** Crear `features/auth/login/login.component.ts` (HU_CRUMBS_001)
+- [x] **T28** Crear `features/auth/register/register.component.ts` (HU_CRUMBS_002)
 
 ## Fase 7 — Feature: Dashboard
 
