@@ -2,7 +2,7 @@
 
 ## Arquitectura General
 
-La aplicación sigue una arquitectura **Feature-based** con **Standalone Components** de Angular 19. No existen NgModules. Cada feature es una unidad autónoma con sus propios componentes, rutas y servicios locales, mientras que los servicios globales viven en `core/`.
+La aplicación sigue una arquitectura **Feature-based** con **Standalone Components** de Angular 21. No existen NgModules. Cada feature es una unidad autónoma con sus propios componentes, rutas y servicios locales, mientras que los servicios globales viven en `core/`.
 
 ```
 Bootstrap (main.ts)
@@ -119,6 +119,14 @@ Todos los servicios usan `HttpClient` y retornan `Observable<T>`. El estado glob
 - Adjunta el header `Authorization: Bearer <token>` a todas las requests.
 - Si recibe un `401`, limpia el token y redirige al login.
 
+### MockAuthInterceptor (`core/interceptors/mock-auth.interceptor.ts`)
+- Función interceptor (`HttpInterceptorFn`) para desarrollo.
+- Simula respuestas de `POST /api/auth/login` y `POST /api/auth/register`.
+- Delay de 500ms para simular latencia de red.
+- Usuario de prueba: `demo@crumbs.app` / `demo` / `123456`.
+- Se activa solo cuando `environment.useMocks = true`.
+- **Para conectar al backend real:** cambiar `useMocks` a `false` en environments.
+
 ---
 
 ## Componentes Shared
@@ -158,9 +166,36 @@ Todos los servicios usan `HttpClient` y retornan `Observable<T>`. El estado glob
 features/auth/
 ├── auth.routes.ts
 ├── login/
-│   └── login.component.ts
+│   ├── login.component.ts
+│   ├── login.component.html
+│   └── login.component.scss
 └── register/
-    └── register.component.ts
+    ├── register.component.ts
+    ├── register.component.html
+    └── register.component.scss
+```
+
+### Core (Implementado)
+```
+core/
+├── models/
+│   └── user.model.ts
+├── interfaces/
+│   └── auth.interfaces.ts          ← Contratos API documentados (DTOs)
+├── services/
+│   └── auth.service.ts
+├── guards/
+│   └── auth.guard.ts
+└── interceptors/
+    ├── auth.interceptor.ts          ← Producción: adjunta Bearer token
+    └── mock-auth.interceptor.ts     ← Desarrollo: simula backend
+```
+
+### Environments
+```
+src/environments/
+├── environment.ts                   ← Producción (useMocks: false)
+└── environment.development.ts       ← Desarrollo (useMocks: true)
 ```
 
 ### Dashboard
@@ -200,3 +235,47 @@ features/amigos/
 └── grupos/
     └── grupos.component.ts
 ```
+
+---
+
+## Docker (Containerización)
+
+### Archivos
+```
+Crumbs/
+├── docker-compose.yml           ← Orquestador global (frontend + backend futuro)
+└── FrontEnd/
+    ├── Dockerfile               ← Multi-stage: dev (Node + ng serve) y prod (Nginx)
+    ├── nginx.conf               ← Config de Nginx para SPA routing en producción
+    └── .dockerignore            ← Excluye node_modules, dist, .git del build
+```
+
+### Cómo levantar el proyecto
+
+**Con Docker (recomendado — solo necesitan Docker instalado):**
+```bash
+cd Crumbs
+docker compose up          # Levanta con hot-reload en http://localhost:4200
+docker compose up --build  # Reconstruye si cambiaste package.json
+docker compose down        # Detiene el container
+```
+
+**Sin Docker (necesitan Node 22+ y npm 11+):**
+```bash
+cd Crumbs/FrontEnd
+npm install
+npm start                  # http://localhost:4200
+```
+
+### Producción
+```bash
+cd Crumbs
+docker compose --profile prod up --build
+# Sirve en http://localhost:80
+```
+
+### Requisitos para el equipo
+- **Con Docker:** Solo necesitan Docker instalado (Docker Desktop en Windows/Mac, docker + docker-compose en Linux). No necesitan Node, npm, ni Angular CLI.
+- **Sin Docker:** Necesitan Node 22+ y npm 11+.
+- Los cambios en código se reflejan automáticamente (volumen montado + polling)
+- Si se agrega un paquete nuevo al `package.json`, reconstruir con `--build`
