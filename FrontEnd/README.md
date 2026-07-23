@@ -1,59 +1,95 @@
-# Crumbs
+# Crumbs — Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.2.
+Aplicación web para dividir gastos entre amigos. Construida con **Angular 21**, **Angular Material** y **Tailwind CSS**.
 
-## Development server
+## Stack Tecnológico
 
-To start a local development server, run:
+- **Framework:** Angular 21 (standalone components, signals)
+- **UI Library:** Angular Material (M3 theme, Purple primary)
+- **Styling:** Tailwind CSS + SCSS
+- **Build:** Vite + Angular CLI
+- **Containerización:** Docker (dev + prod)
 
-```bash
-ng serve
-```
+## Desarrollo
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### Con Docker (recomendado)
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Solo necesitas Docker instalado. No necesitas Node, npm ni Angular CLI.
 
 ```bash
-ng generate --help
+cd Crumbs
+docker compose up          # Levanta en http://localhost:4200 con hot-reload
+docker compose up --build  # Reconstruir si cambiaste package.json
+docker compose down        # Detener
 ```
 
-## Building
+### Sin Docker
 
-To build the project run:
+Requiere Node 22+ y npm 11+.
 
 ```bash
-ng build
+cd Crumbs/FrontEnd
+npm install
+npm start                  # http://localhost:4200
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Build de producción
 
 ```bash
-ng test
+npm run build              # Output en dist/crumbs/
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+O con Docker:
 
 ```bash
-ng e2e
+docker compose --profile prod up --build   # Sirve en http://localhost:80
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Estructura del Proyecto
 
-## Additional Resources
+```
+FrontEnd/src/app/
+├── core/                    # Servicios globales, modelos, guards, interceptors
+│   ├── models/              # Interfaces de dominio (User, Salida, Gasto, Miembro)
+│   ├── interfaces/          # DTOs/contratos del API
+│   ├── services/            # Servicios HTTP (auth, salidas, gastos, miembros)
+│   ├── guards/              # AuthGuard
+│   └── interceptors/        # Auth interceptor + mocks para desarrollo
+├── features/                # Módulos por feature (lazy loaded)
+│   ├── auth/                # Login, Registro
+│   ├── dashboard/           # Home: salidas activas, crear/unirse
+│   ├── salidas/             # Detalle salida: gastos, miembros, drawers
+│   └── perfil/              # Perfil del usuario
+├── shared/                  # Pipes, directivas, componentes compartidos
+└── environments/            # Configuración por entorno
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Datos de Prueba (Mock)
+
+- **Login:** `demo@crumbs.app` / `demo` / contraseña: `123456`
+- **Salidas mock:** "Cine / Spiderman" (A3B9X2), "Cumpleaños de Ana" (ANA123)
+- **Mocks activos cuando:** `environment.useMocks = true`
+
+## Conectar al Backend Real
+
+1. En `src/environments/environment.development.ts` cambiar `useMocks: false`
+2. Configurar `apiUrl` con la URL del backend (ej: `http://localhost:8000/api`)
+3. Los mocks se desactivan automáticamente
+4. Los contratos del API están en `core/interfaces/`
+
+## Tema Visual
+
+- **Color primario:** Purple `#6750A4` (Material M3)
+- **Tipografía:** Roboto
+- **Layout:** Responsive — desktop (grid 2 cols) / mobile (1 col stacked)
+- **Header:** Toolbar purple con logo "Crumbs" (clickeable → dashboard)
+
+## Tests
+
+```bash
+npm test     # Unit tests con Vitest
+```
+
+## Deploy
+
+Ver `Docs/plan-deploy-aws.md` para el plan de deploy con AWS EC2 Free Tier ($0).
