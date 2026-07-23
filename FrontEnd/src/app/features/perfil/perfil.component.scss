@@ -26,6 +26,12 @@
   font-weight: 700;
   color: #1c1b1f;
   margin: 0;
+  cursor: pointer;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #6750a4;
+  }
 }
 
 .header-nav {

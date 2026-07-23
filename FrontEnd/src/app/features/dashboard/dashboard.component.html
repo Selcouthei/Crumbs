@@ -1,6 +1,6 @@
 <!-- Header / Toolbar -->
 <mat-toolbar class="dashboard-header">
-  <span class="logo">Crumbs</span>
+  <span class="logo" (click)="goToDashboard()" role="button" tabindex="0" (keydown.enter)="goToDashboard()">Crumbs</span>
   <span class="spacer"></span>
   <button mat-button (click)="goToPerfil()" class="header-link">
     <mat-icon>person_outline</mat-icon>

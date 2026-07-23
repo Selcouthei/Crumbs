@@ -123,6 +123,11 @@ export class PerfilComponent {
     // Ya estamos en perfil
   }
 
+  /** Navega al dashboard (menú principal) */
+  goToDashboard(): void {
+    this.router.navigate(['/dashboard']);
+  }
+
   /** Cierra sesión */
   logout(): void {
     this.authService.logout();

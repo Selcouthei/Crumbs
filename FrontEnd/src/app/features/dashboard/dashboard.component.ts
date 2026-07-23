@@ -128,4 +128,11 @@ export class DashboardComponent implements OnInit {
   goToPerfil(): void {
     this.router.navigate(['/perfil']);
   }
+
+  /**
+   * Navega al dashboard (para el logo clickeable).
+   */
+  goToDashboard(): void {
+    this.router.navigate(['/dashboard']);
+  }
 }
