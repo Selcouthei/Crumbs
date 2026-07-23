@@ -7,6 +7,7 @@ import { authGuard } from './core/guards/auth.guard';
  * Estructura:
  * - /auth/*        → Módulo de autenticación (lazy loaded, sin guard)
  * - /dashboard     → Página principal (lazy loaded, con authGuard)
+ * - /perfil        → Gestión del perfil de usuario (lazy loaded, con authGuard)
  * - /salidas/:id   → Detalle de una salida (lazy loaded, con authGuard)
  * - /              → Redirige al dashboard
  * - /**            → Wildcard redirige al dashboard
@@ -24,9 +25,17 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'perfil',
+    loadComponent: () =>
+      import('./features/perfil/perfil.component').then(
+        (m) => m.PerfilComponent
+      ),
+    canActivate: [authGuard],
+  },
+  {
     path: 'salidas/:id',
     loadComponent: () =>
-      import('./features/salidas/salida-placeholder.component').then((m) => m.SalidaPlaceholderComponent),
+      import('./features/salidas/salida-detail/salida-detail.component').then((m) => m.SalidaDetailComponent),
     canActivate: [authGuard],
   },
   {

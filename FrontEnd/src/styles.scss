@@ -28,6 +28,14 @@ html {
 }
 
 // ============================================================
+// Tailwind
+// ============================================================
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// ============================================================
 // Estilos globales — Mobile-first
 // ============================================================
 
@@ -51,4 +59,136 @@ body {
   justify-content: center;
   align-items: flex-start;
   min-height: 100dvh;
+}
+
+// ============================================================
+// Tailwind + Angular Material MDC border conflict fix
+// ============================================================
+
+.mdc-notched-outline__leading,
+.mdc-notched-outline__notch,
+.mdc-notched-outline__trailing {
+  border-style: none !important;
+  border-width: 0 !important;
+}
+
+.mdc-notched-outline .mdc-notched-outline__leading {
+  border-style: solid !important;
+  border-width: 1px 0 1px 1px !important;
+  border-color: var(--mdc-outlined-text-field-outline-color, rgba(0, 0, 0, 0.38)) !important;
+  border-radius: 4px 0 0 4px !important;
+}
+
+.mdc-notched-outline .mdc-notched-outline__trailing {
+  border-style: solid !important;
+  border-width: 1px 1px 1px 0 !important;
+  border-color: var(--mdc-outlined-text-field-outline-color, rgba(0, 0, 0, 0.38)) !important;
+  border-radius: 0 4px 4px 0 !important;
+}
+
+.mdc-notched-outline .mdc-notched-outline__notch {
+  border-style: solid !important;
+  border-width: 0 0 1px 0 !important;
+  border-color: var(--mdc-outlined-text-field-outline-color, rgba(0, 0, 0, 0.38)) !important;
+}
+
+.mdc-notched-outline--notched .mdc-notched-outline__notch {
+  border-bottom: none !important;
+}
+
+.mat-focused .mdc-notched-outline .mdc-notched-outline__leading,
+.mat-focused .mdc-notched-outline .mdc-notched-outline__trailing {
+  border-width: 2px 0 2px 2px !important;
+  border-color: var(--mdc-outlined-text-field-focus-outline-color, #6750A4) !important;
+}
+
+.mat-focused .mdc-notched-outline .mdc-notched-outline__trailing {
+  border-width: 2px 2px 2px 0 !important;
+}
+
+.mat-focused .mdc-notched-outline .mdc-notched-outline__notch {
+  border-width: 0 0 2px 0 !important;
+  border-color: var(--mdc-outlined-text-field-focus-outline-color, #6750A4) !important;
+}
+
+.mat-focused .mdc-notched-outline--notched .mdc-notched-outline__notch {
+  border-bottom: none !important;
+}
+
+// ============================================================
+// Material form field fixes
+// ============================================================
+
+.mat-mdc-form-field .mdc-line-ripple {
+  display: none !important;
+}
+
+.mat-mdc-form-field-subscript-wrapper {
+  margin-bottom: 0;
+}
+
+.mat-mdc-form-field-bottom-align::before {
+  display: none;
+}
+
+.drawer-form .mat-mdc-form-field {
+  margin-bottom: 4px;
+}
+
+.mat-mdc-form-field {
+  margin-bottom: 4px;
+}
+
+.mat-mdc-text-field-wrapper {
+  padding: 0 12px !important;
+}
+
+.mat-mdc-form-field.w-full {
+  display: block;
+}
+
+.mat-mdc-form-field-infix {
+  min-height: 48px;
+}
+
+.drawer-form .mat-mdc-form-field-subscript-wrapper {
+  min-height: 0;
+  position: relative;
+}
+
+.drawer-form .mat-mdc-form-field-error-wrapper {
+  position: relative;
+  padding: 0 12px;
+}
+
+// ============================================================
+// Drawer scroll & layout
+// ============================================================
+
+.drawer-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.drawer-panel .drawer-content {
+  flex: 1 1 0%;
+  overflow-y: auto;
+  min-height: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.fixed {
+  position: fixed;
+}
+
+// ============================================================
+// Slide toggle alignment fix
+// ============================================================
+
+.mat-mdc-slide-toggle {
+  display: flex;
+  align-items: center;
 }

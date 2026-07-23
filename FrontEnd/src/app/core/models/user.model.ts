@@ -28,6 +28,9 @@ export interface User {
   /** URL del avatar del usuario. Null si no tiene foto de perfil. */
   avatar_url?: string | null;
 
+  /** Fecha de nacimiento del usuario (ISO 8601, YYYY-MM-DD). Opcional. */
+  fecha_nacimiento?: string | null;
+
   /** Fecha de creación de la cuenta (ISO 8601) */
   created_at: string;
 
