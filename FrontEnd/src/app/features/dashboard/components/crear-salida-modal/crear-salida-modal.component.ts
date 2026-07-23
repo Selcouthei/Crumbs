@@ -9,10 +9,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatChipsModule } from '@angular/material/chips';
+import { MatListModule } from '@angular/material/list';
 
 import { SalidasService } from '../../../../core/services/salidas.service';
 import { IntegranteInicial, SalidasError } from '../../../../core/interfaces/salidas.interfaces';
@@ -23,8 +21,9 @@ import { IntegranteInicial, SalidasError } from '../../../../core/interfaces/sal
  * Formulario con:
  * - Nombre (required, 2-100 chars)
  * - Descripción (optional)
- * - Fecha y hora (required)
+ * - Fecha/Hora (un solo campo datetime-local)
  * - Lista dinámica de integrantes (nickname o nombre libre)
+ *   mostrados como tarjetas con avatar y botón eliminar
  *
  * Al crear exitosamente, cierra el modal retornando { salidaId: string }
  * para que el DashboardComponent navegue al detalle.
@@ -39,10 +38,8 @@ import { IntegranteInicial, SalidasError } from '../../../../core/interfaces/sal
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
     MatProgressSpinnerModule,
-    MatChipsModule,
+    MatListModule,
   ],
   templateUrl: './crear-salida-modal.component.html',
   styleUrl: './crear-salida-modal.component.scss',
@@ -64,12 +61,14 @@ export class CrearSalidaModalComponent {
   /** Input temporal para agregar integrante */
   nuevoIntegranteNombre = signal('');
 
+  /** Controla la visibilidad del input de nuevo integrante */
+  showIntegranteInput = false;
+
   /** Formulario principal */
   form: FormGroup = this.fb.group({
     nombre: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
     descripcion: [''],
-    fecha: [null, Validators.required],
-    hora: ['20:00', Validators.required],
+    fechaHora: ['', Validators.required],
   });
 
   /**
@@ -118,12 +117,10 @@ export class CrearSalidaModalComponent {
     this.isLoading.set(true);
     this.serverError.set(null);
 
-    const { nombre, descripcion, fecha, hora } = this.form.value;
+    const { nombre, descripcion, fechaHora } = this.form.value;
 
-    // Combinar fecha y hora en ISO 8601
-    const fechaDate = new Date(fecha);
-    const [hours, minutes] = hora.split(':').map(Number);
-    fechaDate.setHours(hours, minutes, 0, 0);
+    // Convertir datetime-local a ISO 8601
+    const fechaDate = new Date(fechaHora);
 
     this.salidasService.crearSalida({
       nombre,
