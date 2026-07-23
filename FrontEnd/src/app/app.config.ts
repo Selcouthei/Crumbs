@@ -2,10 +2,12 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { mockAuthInterceptor } from './core/interceptors/mock-auth.interceptor';
+import { mockSalidasInterceptor } from './core/interceptors/mock-salidas.interceptor';
 import { environment } from '../environments/environment';
 
 /**
@@ -26,9 +28,10 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([
         authInterceptor,
-        ...(environment.useMocks ? [mockAuthInterceptor] : []),
+        ...(environment.useMocks ? [mockAuthInterceptor, mockSalidasInterceptor] : []),
       ])
     ),
     provideAnimationsAsync(),
+    provideNativeDateAdapter(),
   ]
 };

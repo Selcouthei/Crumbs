@@ -1,0 +1,128 @@
+.full-width {
+  width: 100%;
+}
+
+.server-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  background: #fdecea;
+  border-radius: 8px;
+  color: #c62828;
+  font-size: 0.875rem;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+// --- Fecha y Hora en fila ---
+.fecha-hora-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.fecha-field {
+  flex: 1;
+}
+
+.hora-field {
+  flex: 1;
+}
+
+// --- Integrantes ---
+.integrantes-section {
+  margin-top: 1rem;
+}
+
+.integrantes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.integrantes-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1c1b1f;
+}
+
+.add-integrante-btn {
+  color: #6750a4;
+}
+
+.integrante-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0.75rem;
+
+  .integrante-input {
+    flex: 1;
+  }
+}
+
+.integrantes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.integrante-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.integrante-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #f3edf7;
+
+  mat-icon {
+    color: #6750a4;
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.integrante-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.integrante-nombre {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #1c1b1f;
+}
+
+.integrante-tipo {
+  font-size: 0.75rem;
+  color: #6b6b6b;
+}
+
+.delete-btn {
+  color: #6b6b6b;
+
+  &:hover {
+    color: #c62828;
+  }
+}

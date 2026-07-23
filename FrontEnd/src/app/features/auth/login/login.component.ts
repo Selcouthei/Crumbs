@@ -68,7 +68,7 @@ export class LoginComponent {
     this.authService.login({ identifier, password }).subscribe({
       next: () => {
         this.isLoading.set(false);
-        this.router.navigate(['/']);
+        this.router.navigate(['/dashboard']);
       },
       error: (error: HttpErrorResponse) => {
         this.isLoading.set(false);

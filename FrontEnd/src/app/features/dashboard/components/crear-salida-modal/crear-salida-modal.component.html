@@ -1,0 +1,158 @@
+<h2 mat-dialog-title>Crear Nueva Salida</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" id="crear-salida-form">
+    <!-- Error del servidor -->
+    @if (serverError()) {
+      <div class="server-error" role="alert">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ serverError() }}</span>
+      </div>
+    }
+
+    <!-- Nombre -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre</mat-label>
+      <input
+        matInput
+        formControlName="nombre"
+        placeholder="Ej: Cumpleaños de Ana"
+        maxlength="100"
+      />
+      @if (form.get('nombre')?.hasError('required') && form.get('nombre')?.touched) {
+        <mat-error>El nombre es obligatorio</mat-error>
+      }
+      @if (form.get('nombre')?.hasError('minlength') && form.get('nombre')?.touched) {
+        <mat-error>Mínimo 2 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Descripción -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Descripción</mat-label>
+      <input
+        matInput
+        formControlName="descripcion"
+        placeholder="Ej: Fiesta en el restaurante"
+      />
+    </mat-form-field>
+
+    <!-- Fecha y Hora en una fila -->
+    <div class="fecha-hora-row">
+      <!-- Fecha con MatDatepicker (calendario visual) -->
+      <mat-form-field appearance="outline" class="fecha-field" (click)="picker.open()">
+        <mat-label>Fecha</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="fecha" placeholder="Seleccionar" />
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        @if (form.get('fecha')?.hasError('required') && form.get('fecha')?.touched) {
+          <mat-error>Requerida</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Hora con Select (dropdown visual) -->
+      <mat-form-field appearance="outline" class="hora-field">
+        <mat-label>Hora</mat-label>
+        <mat-select formControlName="hora">
+          @for (hora of horasDisponibles; track hora.value) {
+            <mat-option [value]="hora.value">{{ hora.label }}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('hora')?.hasError('required') && form.get('hora')?.touched) {
+          <mat-error>Requerida</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <!-- Integrantes -->
+    <div class="integrantes-section">
+      <div class="integrantes-header">
+        <span class="integrantes-label">Integrantes</span>
+        <button
+          mat-icon-button
+          type="button"
+          (click)="showIntegranteInput = !showIntegranteInput"
+          aria-label="Agregar integrante"
+          class="add-integrante-btn"
+        >
+          <mat-icon>person_add</mat-icon>
+        </button>
+      </div>
+
+      <!-- Input para agregar -->
+      @if (showIntegranteInput) {
+        <div class="integrante-input-row">
+          <mat-form-field appearance="outline" class="integrante-input">
+            <mat-label>Nombre o @nickname</mat-label>
+            <input
+              matInput
+              [value]="nuevoIntegranteNombre()"
+              (input)="nuevoIntegranteNombre.set($any($event.target).value)"
+              (keydown.enter)="$event.preventDefault(); agregarIntegrante($any($event.target).value); $any($event.target).value = ''"
+              placeholder="Ej: Carlos o @juanpe"
+            />
+          </mat-form-field>
+          <button
+            mat-icon-button
+            color="primary"
+            type="button"
+            (click)="agregarIntegrante(nuevoIntegranteNombre()); nuevoIntegranteNombre.set('')"
+            [disabled]="!nuevoIntegranteNombre()"
+            aria-label="Confirmar integrante"
+          >
+            <mat-icon>check</mat-icon>
+          </button>
+        </div>
+      }
+
+      <!-- Lista de integrantes como tarjetas -->
+      @if (integrantes().length > 0) {
+        <div class="integrantes-list">
+          @for (integrante of integrantes(); track $index) {
+            <div class="integrante-card">
+              <div class="integrante-avatar">
+                <mat-icon>{{ integrante.es_registrado ? 'person' : 'person_outline' }}</mat-icon>
+              </div>
+              <div class="integrante-info">
+                <span class="integrante-nombre">
+                  {{ integrante.es_registrado ? '@' : '' }}{{ integrante.nombre }}
+                </span>
+                <span class="integrante-tipo">
+                  {{ integrante.es_registrado ? 'Usuario registrado' : 'Integrante externo' }}
+                </span>
+              </div>
+              <button
+                mat-icon-button
+                type="button"
+                (click)="eliminarIntegrante($index)"
+                aria-label="Eliminar integrante"
+                class="delete-btn"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="onCancel()" [disabled]="isLoading()">
+    Cancelar
+  </button>
+  <button
+    mat-flat-button
+    color="primary"
+    type="submit"
+    form="crear-salida-form"
+    [disabled]="isLoading()"
+  >
+    @if (isLoading()) {
+      <mat-spinner diameter="20"></mat-spinner>
+    } @else {
+      Agregar
+    }
+  </button>
+</mat-dialog-actions>

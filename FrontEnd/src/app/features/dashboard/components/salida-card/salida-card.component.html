@@ -1,0 +1,14 @@
+<div class="salida-card" (click)="onClick()" (keydown.enter)="onClick()" tabindex="0" role="button" [attr.aria-label]="'Ver salida ' + salidaWithBalance().salida.nombre">
+  <div class="card-content">
+    <div class="card-info">
+      <h3 class="card-title">{{ salidaWithBalance().salida.nombre }}</h3>
+      <span class="card-members">
+        <mat-icon class="members-icon">people</mat-icon>
+        {{ salidaWithBalance().num_integrantes }} integrantes
+      </span>
+    </div>
+    <div class="card-balance" [ngClass]="balanceClass">
+      {{ balanceText }}
+    </div>
+  </div>
+</div>

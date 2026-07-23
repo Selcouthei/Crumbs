@@ -108,7 +108,7 @@ export class RegisterComponent {
     this.authService.register({ nombre, apellido, nickname, email, password }).subscribe({
       next: () => {
         this.isLoading.set(false);
-        this.router.navigate(['/']);
+        this.router.navigate(['/dashboard']);
       },
       error: (error: HttpErrorResponse) => {
         this.isLoading.set(false);

@@ -20,7 +20,7 @@
 - [x] **T07** Crear `core/models/user.model.ts`
 - [x] **T08** Crear `core/models/salida.model.ts`
 - [x] **T09** Crear `core/models/gasto.model.ts` (incluye MetodoDivision type)
-- [x] **T10** Crear `core/models/miembro.model.ts` (antes integrante)
+- [x] **T10** Crear `core/models/miembro.model.ts` / `integrante.model.ts`
 - [x] **T10b** Crear `core/models/participante.model.ts`
 - [x] **T10c** Crear `core/models/index.ts` (barrel file)
 - [ ] **T11** Crear `core/models/pago.model.ts`
@@ -33,7 +33,7 @@
 ## Fase 4 — Core: Servicios
 
 - [x] **T14** Crear `core/services/auth.service.ts` (login, register, token, currentUser$)
-- [x] **T15** Crear `core/services/salida.service.ts` (getSalidaById, agregarMiembroASalida — MOCK)
+- [x] **T15** Crear `core/services/salida.service.ts` / `salidas.service.ts` (getMisSalidas, crearSalida, unirseSalida)
 - [x] **T16** Crear `core/services/miembro.service.ts` (búsqueda, frecuentes, fantasma — MOCK)
 - [x] **T17** Crear `core/services/gasto.service.ts` (CRUD completo — MOCK)
 - [x] **T17b** Crear `core/services/index.ts` (barrel file)
@@ -57,12 +57,14 @@
 
 ## Fase 7 — Feature: Dashboard
 
-- [ ] **T29** Crear `features/dashboard/dashboard.component.ts` (HU_CRUMBS_003)
-- [ ] **T30** Crear `features/dashboard/components/salida-card/salida-card.component.ts`
-- [ ] **T31** Crear `features/dashboard/components/crear-salida-modal/crear-salida-modal.component.ts`
-- [ ] **T32** Crear `features/dashboard/components/unirse-salida-modal/unirse-salida-modal.component.ts`
+- [x] **T29** Crear `features/dashboard/dashboard.component.ts` (HU_CRUMBS_003)
+- [x] **T30** Crear `features/dashboard/components/salida-card/salida-card.component.ts`
+- [x] **T31** Crear `features/dashboard/components/crear-salida-modal/crear-salida-modal.component.ts`
+- [x] **T32** Crear `features/dashboard/components/unirse-salida-modal/unirse-salida-modal.component.ts`
+- [x] **T32b** Crear `core/interceptors/mock-salidas.interceptor.ts` (mock de salidas para desarrollo)
+- [x] **T32c** Crear `core/interfaces/salidas.interfaces.ts` (DTOs del módulo de salidas)
 
-## Fase 8 — Feature: Salidas
+## Fase 8 — Feature: Salidas (en progreso — otro miembro del equipo)
 
 - [x] **T33** Crear `features/salidas/salida-detail/salida-detail.component.ts` (HU_CRUMBS_005)
 - [x] **T34** Crear `features/salidas/salida-detail/components/gasto-list/gasto-list.component.ts`
@@ -73,7 +75,7 @@
 
 ## Fase 9 — Feature: Perfil y Amigos
 
-- [ ] **T38** Crear `features/perfil/perfil.component.ts`
+- [x] **T38** Crear `features/perfil/perfil.component.ts`
 - [ ] **T39** Crear `features/amigos/amigos.routes.ts`
 - [ ] **T40** Crear `features/amigos/amigos-list/amigos-list.component.ts` (HU_CRUMBS_010)
 - [ ] **T41** Crear `features/amigos/grupos/grupos.component.ts` (HU_CRUMBS_011)
