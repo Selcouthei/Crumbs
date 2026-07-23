@@ -6,6 +6,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { mockAuthInterceptor } from './core/interceptors/mock-auth.interceptor';
+import { mockSalidasInterceptor } from './core/interceptors/mock-salidas.interceptor';
 import { environment } from '../environments/environment';
 
 /**
@@ -26,7 +27,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([
         authInterceptor,
-        ...(environment.useMocks ? [mockAuthInterceptor] : []),
+        ...(environment.useMocks ? [mockAuthInterceptor, mockSalidasInterceptor] : []),
       ])
     ),
     provideAnimationsAsync(),

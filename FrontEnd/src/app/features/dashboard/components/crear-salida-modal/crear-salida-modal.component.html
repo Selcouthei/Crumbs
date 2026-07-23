@@ -1,0 +1,133 @@
+<h2 mat-dialog-title>Crear Nueva Salida</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" id="crear-salida-form">
+    <!-- Error del servidor -->
+    @if (serverError()) {
+      <div class="server-error" role="alert">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ serverError() }}</span>
+      </div>
+    }
+
+    <!-- Nombre -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre de la salida</mat-label>
+      <input
+        matInput
+        formControlName="nombre"
+        placeholder="Ej: Cumpleaños de Ana"
+        maxlength="100"
+      />
+      @if (form.get('nombre')?.hasError('required') && form.get('nombre')?.touched) {
+        <mat-error>El nombre es obligatorio</mat-error>
+      }
+      @if (form.get('nombre')?.hasError('minlength') && form.get('nombre')?.touched) {
+        <mat-error>Mínimo 2 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Descripción -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Descripción (opcional)</mat-label>
+      <textarea
+        matInput
+        formControlName="descripcion"
+        placeholder="Ej: Fiesta en el restaurante italiano"
+        rows="2"
+      ></textarea>
+    </mat-form-field>
+
+    <!-- Fecha -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Fecha</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="fecha" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      @if (form.get('fecha')?.hasError('required') && form.get('fecha')?.touched) {
+        <mat-error>La fecha es obligatoria</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Hora -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Hora</mat-label>
+      <input
+        matInput
+        formControlName="hora"
+        type="time"
+      />
+      @if (form.get('hora')?.hasError('required') && form.get('hora')?.touched) {
+        <mat-error>La hora es obligatoria</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Integrantes -->
+    <div class="integrantes-section">
+      <label class="integrantes-label">Integrantes iniciales</label>
+      <p class="integrantes-hint">
+        Usa <strong>&#64;nickname</strong> para usuarios registrados o escribe un nombre libre.
+      </p>
+
+      <!-- Input para agregar -->
+      <div class="integrante-input-row">
+        <mat-form-field appearance="outline" class="integrante-input">
+          <mat-label>Nombre o @nickname</mat-label>
+          <input
+            matInput
+            [value]="nuevoIntegranteNombre()"
+            (input)="nuevoIntegranteNombre.set($any($event.target).value)"
+            (keydown.enter)="$event.preventDefault(); agregarIntegrante($any($event.target).value); $any($event.target).value = ''"
+            placeholder="Ej: Carlos o @juanpe"
+          />
+        </mat-form-field>
+        <button
+          mat-icon-button
+          color="primary"
+          type="button"
+          (click)="agregarIntegrante(nuevoIntegranteNombre()); nuevoIntegranteNombre.set('')"
+          [disabled]="!nuevoIntegranteNombre()"
+          aria-label="Agregar integrante"
+        >
+          <mat-icon>person_add</mat-icon>
+        </button>
+      </div>
+
+      <!-- Lista de integrantes agregados -->
+      @if (integrantes().length > 0) {
+        <div class="integrantes-list">
+          @for (integrante of integrantes(); track $index) {
+            <mat-chip-row (removed)="eliminarIntegrante($index)">
+              <mat-icon matChipAvatar>
+                {{ integrante.es_registrado ? 'person' : 'person_outline' }}
+              </mat-icon>
+              {{ integrante.es_registrado ? '@' : '' }}{{ integrante.nombre }}
+              <button matChipRemove aria-label="Eliminar integrante">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+          }
+        </div>
+      }
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="onCancel()" [disabled]="isLoading()">
+    Cancelar
+  </button>
+  <button
+    mat-flat-button
+    color="primary"
+    type="submit"
+    form="crear-salida-form"
+    [disabled]="isLoading()"
+  >
+    @if (isLoading()) {
+      <mat-spinner diameter="20"></mat-spinner>
+    } @else {
+      Crear Salida
+    }
+  </button>
+</mat-dialog-actions>

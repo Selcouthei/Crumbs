@@ -1,16 +1,15 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
 
 /**
  * Rutas principales de la aplicación Crumbs.
  *
  * Estructura:
- * - /auth/*       → Módulo de autenticación (lazy loaded, sin guard)
- * - /             → Redirige al login (temporal hasta que exista dashboard)
- * - /**           → Wildcard redirige al login
- *
- * CUANDO SE AGREGUE EL DASHBOARD:
- * - Cambiar el redirect de '' a '/dashboard'
- * - Agregar la ruta: { path: 'dashboard', loadComponent: ..., canActivate: [authGuard] }
+ * - /auth/*        → Módulo de autenticación (lazy loaded, sin guard)
+ * - /dashboard     → Página principal (lazy loaded, con authGuard)
+ * - /salidas/:id   → Detalle de una salida (lazy loaded, con authGuard)
+ * - /              → Redirige al dashboard
+ * - /**            → Wildcard redirige al dashboard
  */
 export const routes: Routes = [
   {
@@ -19,12 +18,24 @@ export const routes: Routes = [
       import('./features/auth/auth.routes').then((m) => m.authRoutes),
   },
   {
+    path: 'dashboard',
+    loadComponent: () =>
+      import('./features/dashboard/dashboard.component').then((m) => m.DashboardComponent),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'salidas/:id',
+    loadComponent: () =>
+      import('./features/salidas/salida-placeholder.component').then((m) => m.SalidaPlaceholderComponent),
+    canActivate: [authGuard],
+  },
+  {
     path: '',
-    redirectTo: '/auth/login',
+    redirectTo: '/dashboard',
     pathMatch: 'full',
   },
   {
     path: '**',
-    redirectTo: '/auth/login',
+    redirectTo: '/dashboard',
   },
 ];

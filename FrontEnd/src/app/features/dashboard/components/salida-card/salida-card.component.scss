@@ -1,0 +1,72 @@
+.salida-card {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  border-radius: 8px;
+
+  &:hover {
+    background-color: #f8f5ff;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #6750a4;
+    outline-offset: 2px;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+  color: #1c1b1f;
+}
+
+.card-members {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: #6b6b6b;
+
+  .members-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.card-balance {
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.balance-positive {
+  color: #2e7d32;
+}
+
+.balance-negative {
+  color: #c62828;
+}
+
+.balance-neutral {
+  color: #6b6b6b;
+}

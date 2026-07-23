@@ -1,0 +1,28 @@
+.full-width {
+  width: 100%;
+}
+
+.modal-description {
+  font-size: 0.875rem;
+  color: #6b6b6b;
+  margin-bottom: 1.25rem;
+  line-height: 1.4;
+}
+
+.server-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  background: #fdecea;
+  border-radius: 8px;
+  color: #c62828;
+  font-size: 0.875rem;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}

@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>Unirse a una Salida</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" id="unirse-salida-form">
+    <p class="modal-description">
+      Ingresa el código de 6 caracteres que te compartieron para unirte a una salida existente.
+    </p>
+
+    <!-- Error del servidor -->
+    @if (serverError()) {
+      <div class="server-error" role="alert">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ serverError() }}</span>
+      </div>
+    }
+
+    <!-- Campo: Código -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Código de salida</mat-label>
+      <input
+        matInput
+        formControlName="codigo"
+        placeholder="Ej: ABC123"
+        maxlength="6"
+        autocomplete="off"
+        style="text-transform: uppercase; letter-spacing: 4px; font-size: 1.25rem; text-align: center;"
+      />
+      <mat-icon matPrefix>vpn_key</mat-icon>
+      @if (form.get('codigo')?.hasError('required') && form.get('codigo')?.touched) {
+        <mat-error>El código es obligatorio</mat-error>
+      }
+      @if (form.get('codigo')?.hasError('minlength') && form.get('codigo')?.touched) {
+        <mat-error>El código debe tener 6 caracteres</mat-error>
+      }
+      @if (form.get('codigo')?.hasError('pattern') && form.get('codigo')?.touched) {
+        <mat-error>Solo letras y números</mat-error>
+      }
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="onCancel()" [disabled]="isLoading()">
+    Cancelar
+  </button>
+  <button
+    mat-flat-button
+    color="primary"
+    type="submit"
+    form="unirse-salida-form"
+    [disabled]="isLoading()"
+  >
+    @if (isLoading()) {
+      <mat-spinner diameter="20"></mat-spinner>
+    } @else {
+      Unirme
+    }
+  </button>
+</mat-dialog-actions>
