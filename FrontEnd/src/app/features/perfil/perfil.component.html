@@ -1,0 +1,145 @@
+<div class="perfil-page">
+  <!-- Header -->
+  <header class="perfil-header">
+    <h1 class="header-logo">Crumbs</h1>
+    <nav class="header-nav">
+      <button mat-button class="nav-link active" (click)="goToPerfil()">Perfil</button>
+      <button mat-button class="nav-link" (click)="logout()">Salir</button>
+    </nav>
+  </header>
+
+  <!-- Contenido principal -->
+  <main class="perfil-content">
+    @if (user()) {
+      <!-- Botón de edición -->
+      @if (!isEditing()) {
+        <div class="edit-button-container">
+          <button
+            mat-icon-button
+            (click)="enableEdit()"
+            aria-label="Editar perfil"
+            class="edit-button"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+      }
+
+      <!-- Modo lectura -->
+      @if (!isEditing()) {
+        <div class="perfil-body">
+          <!-- Avatar -->
+          <div class="avatar-section">
+            <div class="avatar-circle">
+              @if (user()?.avatar_url) {
+                <img
+                  [src]="user()!.avatar_url!"
+                  [alt]="'Avatar de ' + user()!.nombre"
+                  class="avatar-image"
+                />
+              } @else {
+                <mat-icon class="avatar-placeholder">person</mat-icon>
+              }
+            </div>
+          </div>
+
+          <!-- Datos del usuario -->
+          <div class="user-info">
+            <div class="info-item">
+              <span class="info-label">Nombre</span>
+              <span class="info-value">{{ fullName() }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">UserName</span>
+              <span class="info-value">{{ user()!.nickname }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Fecha de nacimiento</span>
+              <span class="info-value">{{ fechaNacimientoFormatted() }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Contraseña</span>
+              <span class="info-value">••••••••</span>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Modo edición -->
+      @if (isEditing()) {
+        <div class="perfil-body">
+          <!-- Avatar -->
+          <div class="avatar-section">
+            <div class="avatar-circle">
+              @if (user()?.avatar_url) {
+                <img
+                  [src]="user()!.avatar_url!"
+                  [alt]="'Avatar de ' + user()!.nombre"
+                  class="avatar-image"
+                />
+              } @else {
+                <mat-icon class="avatar-placeholder">person</mat-icon>
+              }
+            </div>
+          </div>
+
+          <!-- Formulario de edición -->
+          <div class="user-info">
+            <form [formGroup]="editForm" (ngSubmit)="saveChanges()" class="edit-form">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="nombre" placeholder="Tu nombre" />
+                @if (editForm.get('nombre')?.hasError('required') && editForm.get('nombre')?.touched) {
+                  <mat-error>El nombre es obligatorio</mat-error>
+                }
+                @if (editForm.get('nombre')?.hasError('minlength') && editForm.get('nombre')?.touched) {
+                  <mat-error>Mínimo 2 caracteres</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Apellido</mat-label>
+                <input matInput formControlName="apellido" placeholder="Tu apellido" />
+                @if (editForm.get('apellido')?.hasError('required') && editForm.get('apellido')?.touched) {
+                  <mat-error>El apellido es obligatorio</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>UserName</mat-label>
+                <input matInput formControlName="nickname" placeholder="Tu username" />
+                @if (editForm.get('nickname')?.hasError('required') && editForm.get('nickname')?.touched) {
+                  <mat-error>El username es obligatorio</mat-error>
+                }
+                @if (editForm.get('nickname')?.hasError('minlength') && editForm.get('nickname')?.touched) {
+                  <mat-error>Mínimo 3 caracteres</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Fecha de nacimiento</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="fecha_nacimiento" />
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+
+              <!-- Acciones -->
+              <div class="edit-actions">
+                <button mat-button type="button" (click)="cancelEdit()" class="cancel-button">
+                  Cancelar
+                </button>
+                <button mat-flat-button color="primary" type="submit" class="save-button">
+                  Guardar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      }
+    } @else {
+      <div class="loading-state">
+        <p>Cargando perfil...</p>
+      </div>
+    }
+  </main>
+</div>

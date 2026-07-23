@@ -34,4 +34,10 @@ export interface Salida {
 
   /** Fecha de última actualización (ISO 8601) */
   updated_at: string;
+
+  /**
+   * Lista de miembros/integrantes de la salida.
+   * Opcional: se incluye cuando el backend retorna el detalle completo de una salida.
+   */
+  miembros?: import('./miembro.model').Miembro[];
 }

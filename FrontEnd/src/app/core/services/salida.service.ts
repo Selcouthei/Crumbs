@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, delay, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Salida } from '@core/models';
 import { Miembro } from '@core/models';
 
 const MOCK_SALIDAS: Salida[] = [
   {
     id: '1',
-    titulo: 'Cine / Spiderman',
+    nombre: 'Cine / Spiderman',
+    descripcion: 'Salida al cine a ver Spiderman',
     codigo: 'A3B9X2',
-    fecha_creacion: new Date('2026-07-15T18:00:00'),
+    owner_id: '1a2b3c4d-5e6f-7890-abcd-ef1234567890',
+    fecha_hora: '2026-07-15T18:00:00.000Z',
+    created_at: '2026-07-10T12:00:00.000Z',
+    updated_at: '2026-07-15T18:00:00.000Z',
     miembros: [
       {
         id: 'm1',
@@ -71,7 +75,7 @@ export class SalidaService {
     }
 
     const salida = { ...salidas[index] };
-    salida.miembros = [...salida.miembros, miembro];
+    salida.miembros = [...(salida.miembros ?? []), miembro];
 
     const updated = [...salidas];
     updated[index] = salida;

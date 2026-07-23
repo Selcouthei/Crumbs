@@ -25,7 +25,7 @@ import { MiembrosDrawerComponent } from './components/miembros-drawer/miembros-d
         <header class="mb-6">
           <div class="flex items-start justify-between">
             <h1 class="text-2xl font-light text-gray-900">
-              Salida: {{ salida.titulo }}
+              Salida: {{ salida.nombre }}
             </h1>
             <span class="whitespace-nowrap text-sm text-gray-500">
               Código de invitación:
@@ -36,7 +36,7 @@ import { MiembrosDrawerComponent } from './components/miembros-drawer/miembros-d
 
         <!-- Gastos list -->
         <section class="mb-6 flex-1">
-          <app-gasto-list [gastos]="gastos" [miembros]="salida.miembros" />
+          <app-gasto-list [gastos]="gastos" [miembros]="salida.miembros ?? []" />
         </section>
 
         <!-- Action buttons -->

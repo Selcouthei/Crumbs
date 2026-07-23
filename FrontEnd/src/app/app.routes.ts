@@ -35,7 +35,7 @@ export const routes: Routes = [
   {
     path: 'salidas/:id',
     loadComponent: () =>
-      import('./features/salidas/salida-placeholder.component').then((m) => m.SalidaPlaceholderComponent),
+      import('./features/salidas/salida-detail/salida-detail.component').then((m) => m.SalidaDetailComponent),
     canActivate: [authGuard],
   },
   {
