@@ -6,7 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { SalidaService, GastoService } from '@core/services';
 import { Salida, Gasto, Miembro } from '@core/models';
-import { AuthService } from '../../core/services/auth.service';
+import { AuthService } from '@core/services/auth.service';
 import { GastoListComponent } from './components/gasto-list/gasto-list.component';
 import { GastoDrawerComponent } from './components/gasto-drawer/gasto-drawer.component';
 import { MiembrosDrawerComponent } from './components/miembros-drawer/miembros-drawer.component';
