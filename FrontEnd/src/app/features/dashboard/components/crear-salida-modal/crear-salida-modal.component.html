@@ -37,19 +37,32 @@
       />
     </mat-form-field>
 
-    <!-- Fecha/Hora (un solo campo) -->
-    <mat-form-field appearance="outline" class="fecha-hora-field">
-      <mat-label>Fecha / Hora</mat-label>
-      <input
-        matInput
-        formControlName="fechaHora"
-        type="datetime-local"
-      />
-      <mat-icon matSuffix>calendar_today</mat-icon>
-      @if (form.get('fechaHora')?.hasError('required') && form.get('fechaHora')?.touched) {
-        <mat-error>La fecha y hora son obligatorias</mat-error>
-      }
-    </mat-form-field>
+    <!-- Fecha y Hora en una fila -->
+    <div class="fecha-hora-row">
+      <!-- Fecha con MatDatepicker (calendario visual) -->
+      <mat-form-field appearance="outline" class="fecha-field">
+        <mat-label>Fecha</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="fecha" placeholder="Seleccionar" readonly />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        @if (form.get('fecha')?.hasError('required') && form.get('fecha')?.touched) {
+          <mat-error>Requerida</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Hora con Select (dropdown visual) -->
+      <mat-form-field appearance="outline" class="hora-field">
+        <mat-label>Hora</mat-label>
+        <mat-select formControlName="hora">
+          @for (hora of horasDisponibles; track hora.value) {
+            <mat-option [value]="hora.value">{{ hora.label }}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('hora')?.hasError('required') && form.get('hora')?.touched) {
+          <mat-error>Requerida</mat-error>
+        }
+      </mat-form-field>
+    </div>
 
     <!-- Integrantes -->
     <div class="integrantes-section">
@@ -58,7 +71,7 @@
         <button
           mat-icon-button
           type="button"
-          (click)="showIntegranteInput = true"
+          (click)="showIntegranteInput = !showIntegranteInput"
           aria-label="Agregar integrante"
           class="add-integrante-btn"
         >
@@ -66,7 +79,7 @@
         </button>
       </div>
 
-      <!-- Input para agregar (se muestra al hacer click en el ícono) -->
+      <!-- Input para agregar -->
       @if (showIntegranteInput) {
         <div class="integrante-input-row">
           <mat-form-field appearance="outline" class="integrante-input">
@@ -77,7 +90,6 @@
               (input)="nuevoIntegranteNombre.set($any($event.target).value)"
               (keydown.enter)="$event.preventDefault(); agregarIntegrante($any($event.target).value); $any($event.target).value = ''"
               placeholder="Ej: Carlos o @juanpe"
-              #integranteInput
             />
           </mat-form-field>
           <button

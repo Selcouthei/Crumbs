@@ -2,10 +2,6 @@
   width: 100%;
 }
 
-.fecha-hora-field {
-  width: auto;
-}
-
 .server-error {
   display: flex;
   align-items: center;
@@ -22,6 +18,21 @@
     width: 20px;
     height: 20px;
   }
+}
+
+// --- Fecha y Hora en fila ---
+.fecha-hora-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.fecha-field {
+  flex: 1;
+}
+
+.hora-field {
+  flex: 1;
 }
 
 // --- Integrantes ---
