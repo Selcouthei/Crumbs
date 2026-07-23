@@ -1,0 +1,70 @@
+<!-- Header / Toolbar -->
+<mat-toolbar class="dashboard-header">
+  <span class="logo">Crumbs</span>
+  <span class="spacer"></span>
+  <button mat-button (click)="goToPerfil()" class="header-link">
+    <mat-icon>person_outline</mat-icon>
+    Perfil
+  </button>
+  <button mat-button (click)="logout()" class="header-link">
+    <mat-icon>logout</mat-icon>
+    Salir
+  </button>
+</mat-toolbar>
+
+<!-- Main Content -->
+<main class="dashboard-content">
+  <!-- Saludo -->
+  <h1 class="saludo">¡Hola, {{ nickname() }}!</h1>
+
+  <div class="dashboard-grid">
+    <!-- Columna izquierda: Botones de acción -->
+    <section class="acciones-section">
+      <button
+        mat-flat-button
+        color="primary"
+        class="action-button"
+        (click)="openCrearSalida()"
+      >
+        <mat-icon>add_circle_outline</mat-icon>
+        Crear Salida
+      </button>
+
+      <button
+        mat-flat-button
+        color="primary"
+        class="action-button"
+        (click)="openUnirseSalida()"
+      >
+        <mat-icon>group_add</mat-icon>
+        Agregar Salida
+      </button>
+    </section>
+
+    <!-- Columna derecha: Mis Salidas Activas -->
+    <section class="salidas-section">
+      <h2 class="section-title">Mis Salidas Activas</h2>
+
+      @if (isLoading()) {
+        <div class="loading-container">
+          <mat-spinner diameter="40" aria-label="Cargando salidas"></mat-spinner>
+        </div>
+      } @else if (salidas().length === 0) {
+        <div class="empty-state">
+          <mat-icon class="empty-icon">groups</mat-icon>
+          <p>No tienes salidas activas.</p>
+          <p class="empty-hint">Crea una nueva o únete con un código.</p>
+        </div>
+      } @else {
+        <div class="salidas-list">
+          @for (salidaData of salidas(); track salidaData.salida.id) {
+            <app-salida-card
+              [salidaWithBalance]="salidaData"
+              (cardClick)="onSalidaClick($event)"
+            />
+          }
+        </div>
+      }
+    </section>
+  </div>
+</main>
