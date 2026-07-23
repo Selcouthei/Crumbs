@@ -2,6 +2,10 @@
   width: 100%;
 }
 
+.fecha-hora-field {
+  width: auto;
+}
+
 .server-error {
   display: flex;
   align-items: center;
@@ -20,26 +24,33 @@
   }
 }
 
+// --- Integrantes ---
 .integrantes-section {
-  margin-top: 0.5rem;
+  margin-top: 1rem;
+}
+
+.integrantes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
 }
 
 .integrantes-label {
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   font-weight: 500;
   color: #1c1b1f;
 }
 
-.integrantes-hint {
-  font-size: 0.75rem;
-  color: #6b6b6b;
-  margin: 0.25rem 0 0.75rem;
+.add-integrante-btn {
+  color: #6750a4;
 }
 
 .integrante-input-row {
   display: flex;
   align-items: center;
   gap: 8px;
+  margin-bottom: 0.75rem;
 
   .integrante-input {
     flex: 1;
@@ -48,7 +59,59 @@
 
 .integrantes-list {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 0.5rem;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.integrante-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.integrante-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #f3edf7;
+
+  mat-icon {
+    color: #6750a4;
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.integrante-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.integrante-nombre {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #1c1b1f;
+}
+
+.integrante-tipo {
+  font-size: 0.75rem;
+  color: #6b6b6b;
+}
+
+.delete-btn {
+  color: #6b6b6b;
+
+  &:hover {
+    color: #c62828;
+  }
 }
