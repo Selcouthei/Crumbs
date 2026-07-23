@@ -40,10 +40,10 @@
     <!-- Fecha y Hora en una fila -->
     <div class="fecha-hora-row">
       <!-- Fecha con MatDatepicker (calendario visual) -->
-      <mat-form-field appearance="outline" class="fecha-field">
+      <mat-form-field appearance="outline" class="fecha-field" (click)="picker.open()">
         <mat-label>Fecha</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="fecha" placeholder="Seleccionar" readonly />
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <input matInput [matDatepicker]="picker" formControlName="fecha" placeholder="Seleccionar" />
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
         @if (form.get('fecha')?.hasError('required') && form.get('fecha')?.touched) {
           <mat-error>Requerida</mat-error>
